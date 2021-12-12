@@ -1,6 +1,4 @@
-package search
-
-import "fmt"
+package pinyinSearch
 
 func (s *SourceStore) MatchFullSpell(pinyin string) []string {
 	return s.matchSub(pinyin, 0, nil)
@@ -52,14 +50,14 @@ func (s *SourceStore) matchSub(pinyin string, dept int, exists map[string]int) [
 	for i = 1; i <= len(pinyin); i++ {
 		key = pinyin[0:i]
 
-		fmt.Println(key)
+		//fmt.Println(key)
 
 		v, ok = s.match.Load(key)
 		if !ok {
 			continue
 		}
 
-		fmt.Println("find", key, v)
+		//fmt.Println("find", key, v)
 
 		info = v.(map[string]int)
 		if 0 == dept {
@@ -81,7 +79,7 @@ func (s *SourceStore) matchSub(pinyin string, dept int, exists map[string]int) [
 		}
 
 		if 0 != len(nextDict) {
-			fmt.Println("nextDict", nextDict)
+			//fmt.Println("nextDict", nextDict)
 			res = append(res, s.matchSub(pinyin[i:], dept+1, nextDict)...)
 			continue
 		}
